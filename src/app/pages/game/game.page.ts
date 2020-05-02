@@ -65,13 +65,10 @@ export class GamePage implements OnInit {
 
   checkUp() {
     for (let [x, y] of [2, 1, 0].entries()) {
-      console.log(this.mark, 'this.jungkook', x, y, this.jungkook[x][y]);
-
       if (this.jungkook[x][y] !== this.mark) {
         return false;
       }
     }
-
     this.gameOver = true;
     this.winner = this.playerNow;
   }
