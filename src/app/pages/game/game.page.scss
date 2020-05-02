@@ -1,0 +1,16 @@
+.grid {
+  grid-template: auto/auto auto auto;
+  display: grid;
+  width: fit-content;
+  margin: 60px auto;
+
+  .box {
+    width: 60px;
+    height: 60px;
+    border: 1px solid white;
+    margin: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
