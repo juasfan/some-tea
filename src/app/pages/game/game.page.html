@@ -5,14 +5,26 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <h4>It's {{ playerNow}}'s turn!</h4>
+  <div *ngIf="!winner">
+    <h3>{{playerNow}}</h3>
+    <h5>is choosing now!</h5>
+  </div>
+  <h6 *ngIf="winner">Winner is {{winner}}!!!</h6>
+
   <div class="grid">
-    <div
-      class="box"
-      *ngFor="let i of taehyung; index as j"
-      (click)="selectBox(j)"
-    >
-      <div>{{ i }}</div>
-    </div>
+    <ng-container *ngFor="let i of jungkook; index as x">
+      <div
+        class="box"
+        [class.selected]="j !== ''"
+        *ngFor="let j of i; index as y"
+        (click)="j !== 'X' && j!== 'O' && !gameOver && selectBox(x,y)"
+      >
+        <div>{{ j }}</div>
+      </div>
+    </ng-container>
+  </div>
+
+  <div class="btn" (click)="reset()" *ngIf="gameOver || steps === 0">
+    Reset game!
   </div>
 </ion-content>

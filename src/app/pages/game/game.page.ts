@@ -6,21 +6,85 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./game.page.scss'],
 })
 export class GamePage implements OnInit {
-  taehyung: string[] = ['', '', '', '', '', '', '', '', ''];
+  players: string[] = ['Hoseok', 'Jimin'];
 
-  players: string[] = ['Suga', 'Jimin'];
-  playerNow: string = this.players[0];
+  jungkook: string[][];
+  steps: number;
+  playerNow: string;
+  gameOver: boolean;
+  mark: string;
+  winner: string;
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.reset();
+  }
 
-  selectBox(box: number) {
-    if (this.taehyung[box] !== 'X' && this.taehyung[box] !== 'O') {
-      let mark: string = this.playerNow === this.players[0] ? 'O' : 'X';
-      this.taehyung[box] = mark;
+  selectBox(x: number, y: number) {
+    this.steps--;
+    this.mark = this.playerNow === this.players[0] ? 'O' : 'X';
+    this.jungkook[x][y] = this.mark;
 
-      this.playerNow = mark === 'O' ? this.players[1] : this.players[0];
+    this.checkRow(x);
+    this.checkCol(y);
+    this.checkDown();
+    this.checkUp();
+
+    if (!this.gameOver)
+      this.playerNow = this.mark === 'O' ? this.players[1] : this.players[0];
+  }
+
+  checkRow(x: number) {
+    for (let y of [0, 1, 2]) {
+      if (this.jungkook[x][y] !== this.mark) {
+        return false;
+      }
     }
+    this.gameOver = true;
+    this.winner = this.playerNow;
+  }
+
+  checkCol(y: number) {
+    for (let x of [0, 1, 2]) {
+      if (this.jungkook[x][y] !== this.mark) {
+        return false;
+      }
+    }
+    this.gameOver = true;
+    this.winner = this.playerNow;
+  }
+
+  checkDown() {
+    for (let i of [0, 1, 2]) {
+      if (this.jungkook[i][i] !== this.mark) return false;
+    }
+    this.gameOver = true;
+    this.winner = this.playerNow;
+  }
+
+  checkUp() {
+    for (let [x, y] of [2, 1, 0].entries()) {
+      console.log(this.mark, 'this.jungkook', x, y, this.jungkook[x][y]);
+
+      if (this.jungkook[x][y] !== this.mark) {
+        return false;
+      }
+    }
+
+    this.gameOver = true;
+    this.winner = this.playerNow;
+  }
+
+  reset() {
+    this.jungkook = [
+      ['', '', ''],
+      ['', '', ''],
+      ['', '', ''],
+    ];
+    this.gameOver = false;
+    this.steps = 9;
+    this.playerNow = this.players[0];
+    this.winner = undefined;
   }
 }
