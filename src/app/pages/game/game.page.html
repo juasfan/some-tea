@@ -1,18 +1,10 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>game</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content class="ion-padding">
-  <div *ngIf="!winner">
-    <h3>{{playerNow}}</h3>
-    <h5>is choosing now!</h5>
-  </div>
-  <h6 *ngIf="winner">Winner is {{winner}}!!!</h6>
+  <h5 *ngIf="!winner">{{playerNow}}'s turn now!</h5>
+  <h5 *ngIf="winner">{{ winner }} wins!</h5>
+  <h5 *ngIf="steps === 0 && !winner">Game Over</h5>
 
   <div class="grid">
-    <ng-container *ngFor="let i of jungkook; index as x">
+    <ng-container *ngFor="let i of boxes; index as x">
       <div
         class="box"
         [class.selected]="j !== ''"
@@ -25,6 +17,6 @@
   </div>
 
   <div class="btn" (click)="reset()" *ngIf="gameOver || steps === 0">
-    Reset game!
+    try again
   </div>
 </ion-content>

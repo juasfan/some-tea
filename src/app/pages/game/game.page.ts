@@ -6,14 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./game.page.scss'],
 })
 export class GamePage implements OnInit {
-  players: string[] = ['Hoseok', 'Jimin'];
-
-  jungkook: string[][];
-  steps: number;
-  playerNow: string;
-  gameOver: boolean;
-  mark: string;
   winner: string;
+  playerNow: string;
+  players: string[] = ['Player1', 'Player2'];
+
+  mark: string;
+  steps: number;
+  gameOver: boolean;
+  boxes: string[][];
 
   constructor() {}
 
@@ -24,64 +24,62 @@ export class GamePage implements OnInit {
   selectBox(x: number, y: number) {
     this.steps--;
     this.mark = this.playerNow === this.players[0] ? 'O' : 'X';
-    this.jungkook[x][y] = this.mark;
+    this.boxes[x][y] = this.mark;
 
-    this.checkRow(x);
-    this.checkCol(y);
-    this.checkDown();
-    this.checkUp();
+    this.checkWin(x, y);
+  }
+
+  checkWin(x: number, y: number) {
+    this.gameOver = this.checkRow(x);
+
+    if (!this.gameOver) this.gameOver = this.checkCol(y);
+    if (!this.gameOver) this.gameOver = this.checkCrossDown();
+    if (!this.gameOver) this.gameOver = this.checkCrossUp();
 
     if (!this.gameOver)
       this.playerNow = this.mark === 'O' ? this.players[1] : this.players[0];
+    else {
+      this.winner = this.playerNow;
+    }
   }
 
   checkRow(x: number) {
     for (let y of [0, 1, 2]) {
-      if (this.jungkook[x][y] !== this.mark) {
-        return false;
-      }
+      if (this.boxes[x][y] !== this.mark) return false;
     }
-    this.gameOver = true;
-    this.winner = this.playerNow;
+    return true;
   }
 
   checkCol(y: number) {
     for (let x of [0, 1, 2]) {
-      if (this.jungkook[x][y] !== this.mark) {
-        return false;
-      }
+      if (this.boxes[x][y] !== this.mark) return false;
     }
-    this.gameOver = true;
-    this.winner = this.playerNow;
+    return true;
   }
 
-  checkDown() {
+  checkCrossDown() {
     for (let i of [0, 1, 2]) {
-      if (this.jungkook[i][i] !== this.mark) return false;
+      if (this.boxes[i][i] !== this.mark) return false;
     }
-    this.gameOver = true;
-    this.winner = this.playerNow;
+    return true;
   }
 
-  checkUp() {
+  checkCrossUp() {
     for (let [x, y] of [2, 1, 0].entries()) {
-      if (this.jungkook[x][y] !== this.mark) {
-        return false;
-      }
+      if (this.boxes[x][y] !== this.mark) return false;
     }
-    this.gameOver = true;
-    this.winner = this.playerNow;
+    return true;
   }
 
   reset() {
-    this.jungkook = [
+    this.boxes = [
       ['', '', ''],
       ['', '', ''],
       ['', '', ''],
     ];
-    this.gameOver = false;
     this.steps = 9;
-    this.playerNow = this.players[0];
+    this.gameOver = false;
     this.winner = undefined;
+    this.playerNow = this.players[0];
   }
 }

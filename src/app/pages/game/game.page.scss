@@ -7,8 +7,9 @@
   .box {
     width: 60px;
     height: 60px;
-    border: 1px solid white;
+    border: 1px solid black;
     margin: 2px;
+    border-radius: 3px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -18,15 +19,4 @@
       color: black;
     }
   }
-}
-
-.btn {
-  background: white;
-  border-radius: 3px;
-  padding: 8px 33px;
-  color: black;
-  margin: auto;
-  width: fit-content;
-  font-size: 16px;
-  font-weight: 600;
 }
