@@ -18,12 +18,13 @@ export class GamePage implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    this.reset();
+    this.start();
   }
 
   selectBox(x: number, y: number) {
     this.steps--;
-    this.mark = this.playerNow === this.players[0] ? 'O' : 'X';
+    this.mark =
+      this.playerNow === this.players[0] ? 'panorama_fish_eye' : 'close';
     this.boxes[x][y] = this.mark;
 
     this.checkWin(x, y);
@@ -37,7 +38,8 @@ export class GamePage implements OnInit {
     if (!this.gameOver) this.gameOver = this.checkCrossUp();
 
     if (!this.gameOver)
-      this.playerNow = this.mark === 'O' ? this.players[1] : this.players[0];
+      this.playerNow =
+        this.mark === 'panorama_fish_eye' ? this.players[1] : this.players[0];
     else {
       this.winner = this.playerNow;
     }
@@ -71,7 +73,7 @@ export class GamePage implements OnInit {
     return true;
   }
 
-  reset() {
+  start() {
     this.boxes = [
       ['', '', ''],
       ['', '', ''],

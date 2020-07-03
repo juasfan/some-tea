@@ -9,14 +9,14 @@
         class="box"
         [class.selected]="j !== ''"
         *ngFor="let j of i; index as y"
-        (click)="j !== 'X' && j!== 'O' && !gameOver && selectBox(x,y)"
+        (click)="j !== 'close' && j!== 'panorama_fish_eye' && !gameOver && selectBox(x,y)"
       >
-        <div>{{ j }}</div>
+        <div class="icons">{{ j }}</div>
       </div>
     </ng-container>
   </div>
 
-  <div class="btn" (click)="reset()" *ngIf="gameOver || steps === 0">
+  <div class="btn" (click)="start()" *ngIf="gameOver || steps === 0">
     try again
   </div>
 </ion-content>
